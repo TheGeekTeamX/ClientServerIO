@@ -60,12 +60,6 @@ public class SocketCS {
 				client.sendEvent("toClient", "message from server " + data);
 			}
 		});
-		server.addEventListener("test", String.class, new DataListener<String>() {
-			@Override
-			public void onData(SocketIOClient client, String data, AckRequest ackRequest) {
-				client.sendEvent("toTest", "test from server " + data);
-			}
-		});
 		server.start();
 		Thread.sleep(10000);
 		server.stop();
@@ -73,15 +67,6 @@ public class SocketCS {
 
 	public static void client() throws URISyntaxException, InterruptedException {
 		socket = IO.socket("http://localhost:" + PORT);
-
-		socket.on("test", new Emitter.Listener() {
-
-			@Override
-			public void call(Object... arg0) {
-				socket.emit("toTest", "blabla");
-				socket.send("dasd");
-			}
-		});
 
 		socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
 			@Override
